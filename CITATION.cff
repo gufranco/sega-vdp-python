@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: sega-vdp-python
+message: >-
+  If you use this work, or the facts it was settled against, please cite it.
+type: software
+authors:
+  - given-names: Gustavo
+    family-names: Franco
+    alias: gufranco
+repository-code: https://github.com/gufranco/sega-vdp-python
+url: https://github.com/gufranco/sega-vdp-python
+abstract: >-
+  A model of the Sega 315-5124, 315-5246 and 315-5378 video display processors and the sound generator inside each of them, advanced one master clock tick at a time: the port protocol and its decode, mode 4 and the legacy modes, colour RAM, sprites, the line counter and frame interrupts, the V and H counters, and when the processor's video and colour memory accesses land. It composes the TMS9918 and SN76489 family members rather than copying them. Every fact names the Sega reference manual page it was read from, or the community document and implementation it came from with the measurement that would settle it.
+keywords:
+  - sega
+  - master-system
+  - game-gear
+  - vdp
+  - video-display-processor
+  - sn76489
+  - hardware-model
+  - conformance
+license: MIT
+version: 0.0.0

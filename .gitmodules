@@ -1,0 +1,9 @@
+[submodule "zilog-z80-python"]
+	path = zilog-z80-python
+	url = https://github.com/gufranco/zilog-z80-python.git
+[submodule "ti-tms9918-python"]
+	path = ti-tms9918-python
+	url = https://github.com/gufranco/ti-tms9918-python.git
+[submodule "ti-sn76489-python"]
+	path = ti-sn76489-python
+	url = https://github.com/gufranco/ti-sn76489-python.git

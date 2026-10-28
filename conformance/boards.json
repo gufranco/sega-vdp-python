@@ -1,0 +1,396 @@
+{
+  "note": "Every cartridge image MAME's software lists place on a board other than Sega's own paging, by whole-file SHA-1. The census board models Sega's paging only, so these images run on it without their board and are counted apart rather than gated.",
+  "source": "MAME hash/sms.xml and hash/gamegear.xml at commit 94fc55c9692b180dcb608e2e222e48315db5017a, https://github.com/mamedev/mame. Facts only; no code is taken.",
+  "boards": [
+    {
+      "sha1": "a60815aa0c6ec2bc5ad7f817668b74a42bb64026",
+      "board": "codemasters",
+      "software": "cj",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "322ea1294833659a205e313ca49667b921891e85",
+      "board": "codemasters",
+      "software": "cjp",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "c24f48ca3fb7df3b50b4353095c7a070653f3539",
+      "board": "codemasters",
+      "software": "cosmic",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "46d1689c09705341f593a18d4e9cfd7805ecff88",
+      "board": "codemasters",
+      "software": "dinobash",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "b78bc3fe6bfbc7d6f5e85d59d79be19bf7372bcc",
+      "board": "codemasters",
+      "software": "dropzone",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "a8d75c2af514dc81ba4dc66a508384d730a77ce4",
+      "board": "codemasters",
+      "software": "ernieeg",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "db3c0686715373242911f8471a1e91673811d62a",
+      "board": "codemasters",
+      "software": "excdizzy",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "09a2acf3ed90101be2629384c5c702f6a5408035",
+      "board": "codemasters",
+      "software": "excdizzyp",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "b6a13d51c72b576738f0d7e8e328db2ffeb0b38c",
+      "board": "codemasters",
+      "software": "fantdizz",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "2b3bb8fd76fe706d7e564b372d2d71dfce53cb1b",
+      "board": "codemasters",
+      "software": "jangpun2",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "76f3c504d717067134a88f7f1d0ef38bd6698e50",
+      "board": "eeprom",
+      "software": "majors",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "7b2d39b68622e18eac6c27fd961133b1d002342b",
+      "board": "codemasters",
+      "software": "micromac",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "51cb41c00020f80d7c3c80b217b41841ad59a825",
+      "board": "codemasters",
+      "software": "micromacp",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "53ad6546462638ab246b4fdd7ca4b8966dde0d96",
+      "board": "codemasters",
+      "software": "micromc2",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "127a7e6706f6d9b129d5cf0dd2bb417e9b108748",
+      "board": "eeprom",
+      "software": "nomowsb",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "442ad0bdbde2500a4b910382a7141713ab424b3f",
+      "board": "mgear",
+      "software": "par",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "faac2b420cb895aec4216d4c5ce21e5f2a4c4338",
+      "board": "eeprom",
+      "software": "proyak94",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "bf78122a549ad9b016e3704690c7eea1574af140",
+      "board": "eeprom",
+      "software": "proyakgg",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "ab9b4c833207824efb14b712b4ec82721c8436bc",
+      "board": "codemasters",
+      "software": "sampras",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "94f1113a6b19b7fa080114c65e8d0bd67f9117d7",
+      "board": "codemasters",
+      "software": "shero",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "b167fda9f0e7a6a47027f782a08149e8d4f46e0c",
+      "board": "codemasters",
+      "software": "sslucifr",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "434a9a21a2662bff1cd2246528eebce8a5116c1b",
+      "board": "codemasters",
+      "software": "strtbatl",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "333dd99f11781d6de5720043530a460a409d652b",
+      "board": "eeprom",
+      "software": "wsb",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "ccfd03edf130f28e6bb4c2764df7ace7bbe9e159",
+      "board": "eeprom",
+      "software": "wsb1",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "66d31ed6bb6dfedd769bf5e6c5dcbf899f2f2c8c",
+      "board": "eeprom",
+      "software": "wsb95",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "b6664c21a99a96392fe79237d326e96ac0bdd52a",
+      "board": "xterminator",
+      "software": "xtermin",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "ee2123cc2addd9e48d3f4dc909334504c5b330ab",
+      "board": "xterminator",
+      "software": "xterminj",
+      "list": "gamegear.xml"
+    },
+    {
+      "sha1": "2f8b5a66381dbbe7524af7af6372fbb6a6575ac5",
+      "board": "4pak",
+      "software": "4pak",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "d7e67d15ccc12e9bf40611dc91a080a99716ca6e",
+      "board": "korean_nb",
+      "software": "bublboky",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "f46f716dd34a1a5013a2d8a59769f6ef7536a567",
+      "board": "codemasters",
+      "software": "cosmic",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "e7fefabd7a920fd71e87509d065080855b5b233c",
+      "board": "korean_nb",
+      "software": "cso",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "c2e661e9b68a78e5a5fae5ae297b5d964d82491e",
+      "board": "zemina",
+      "software": "cyborgz",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "9ebd5a7b025e980795eaac206f3f6f5dc297084f",
+      "board": "korean",
+      "software": "dallye",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "05b4f23e33ada08e0a8b1fc6feccd8a97c690a21",
+      "board": "codemasters",
+      "software": "dinobash",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "09a2acf3ed90101be2629384c5c702f6a5408035",
+      "board": "codemasters",
+      "software": "excdizzy",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "5df1b4c00adb2b494f7298353d92b4d7ad3f50f6",
+      "board": "zemina",
+      "software": "f1spirit",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "4202ce26832046c7ca8209240f097a8a0a84d981",
+      "board": "codemasters",
+      "software": "fantdizz",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "4e35c8375aba080c416d721fa885ccc232b9a171",
+      "board": "korean_nb",
+      "software": "fatetris",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "bfa43eaa99c470eaa542ba37033651c2759b9874",
+      "board": "korean_nb",
+      "software": "fpoint",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "35a5f9a52cce6d702ba7e68daa7b5a07bce5ca87",
+      "board": "korean_188in1",
+      "software": "game188",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "a64f63eb81bfdd81476daf74a810b5b29fb55986",
+      "board": "hicom",
+      "software": "hicom3a",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "65ed4232b972e3d85147561b310115dd6b642b99",
+      "board": "hicom",
+      "software": "hicom3b",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "d3912814b33ce9ca13340902524bcc01dcf397b0",
+      "board": "hicom",
+      "software": "hicom3c",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "5e20414c5eb61c3c817509f794381e1577e69111",
+      "board": "hicom",
+      "software": "hicom3d",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "940af778df6190ef2606a3555d47c0a7d194e05c",
+      "board": "hicom",
+      "software": "hicom3e",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "9ee8554a85dfc0a5a278474f4886b311650b37dc",
+      "board": "hicom",
+      "software": "hicom3f",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "cbcdcd85317becd7ced71612a72913c02fa805be",
+      "board": "hicom",
+      "software": "hicom8a",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "657051e0cf27377b8c89c42d3a8f3deef165430a",
+      "board": "hicom",
+      "software": "hicom8b",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "c7eddfbdf0383e0b813abf2bbf47c1e779587adb",
+      "board": "hicom",
+      "software": "hicom8c",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "f44299070c8f4d3c0a4b2f671d105c811ae7db99",
+      "board": "korean",
+      "software": "hongkd",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "a290e41e0218dd54c7774229a7bf77c0e6b037f9",
+      "board": "janggun",
+      "software": "janggun",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "10a5095513efebae3d045b217caa7a520e66f26f",
+      "board": "korean",
+      "software": "jangpun2",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "1b2b525ef2ab2d7ea3f934f0c229dab33af56d90",
+      "board": "korean",
+      "software": "jangpun3",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "b716266e936b7cd0a6e29785ae3e7686e1b35793",
+      "board": "zemina",
+      "software": "knightm2",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "425621f350d011fd021850238c6de9999625fd69",
+      "board": "codemasters",
+      "software": "micromac",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "fbee313aaa8d7acea4acbb763592f73466596113",
+      "board": "nemesis",
+      "software": "nemesis",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "4b0c286448bde49f9247a4f9a5add38d48021fd7",
+      "board": "zemina",
+      "software": "nemesis2",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "9d0c8fb5f1ff6f596aa156264db8d7c1c778b1bf",
+      "board": "zemina",
+      "software": "pengadv",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "c0256188b15271bb814bb8356b3311340e53ea3e",
+      "board": "korean",
+      "software": "sangoku3",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "f0e6a20c72f0fb0feb1681217eeec3b69950e897",
+      "board": "korean",
+      "software": "sboy1",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "5d65a308bb9ec8c4b4ce334b18d699b1f53227ef",
+      "board": "zemina",
+      "software": "sboy3",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "83d6f261471dca20f8d2e33b9807d670e9b4eb9c",
+      "board": "seojin",
+      "software": "smssgame",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "49f9d62f121d3b7e35d38436c920a53b7070ecd4",
+      "board": "zemina",
+      "software": "strtmast",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "f98f9c0fd32b2392b57b14105a9b730c8957d9b9",
+      "board": "zemina",
+      "software": "wonsiin",
+      "list": "sms.xml"
+    },
+    {
+      "sha1": "202cc058ba46cc466387a67cce2ab7f5f55977d0",
+      "board": "korean_nb",
+      "software": "xyzolog",
+      "list": "sms.xml"
+    }
+  ]
+}

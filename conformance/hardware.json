@@ -1,0 +1,919 @@
+{
+  "note": "What Sega printed about the VDP in its Mark III reference manual, fact by fact, with the sentence each was read from. Everything the manual does not print sits under notStated, each naming where its value came from and the measurement that would settle it. Where two sources part, divergences.json says which way this package went.",
+  "authority": {
+    "order": [
+      "hardware.json facts, for anything Sega printed in its Mark III reference manual",
+      "the Master System and Game Gear cartridge libraries, for which registers, modes and screens real software reaches, counted by conformance/census.py",
+      "Charles MacDonald's VDP document and the SMS Power sound generator page, for what Sega never printed",
+      "Genesis Plus GX, for the counter tables and the order of events in a line, counted with MacDonald as one lineage",
+      "nothing else"
+    ],
+    "why": "The manual is the only Sega document known, and it is retyped rather than scanned, so it decides what it prints and nothing more. It describes the first part as a programmer sees it, never the chip's timing. Everything the second and the handheld parts changed, and every timing, rests on community documents, and the implementations repeating them share their lineage, so agreement among them counts once.",
+    "comparedAgainst": {
+      "what": "The Master System and Game Gear cartridge libraries, walked by the census for which modes, screens, registers and sprite sizes real software reaches, and the test cartridges that exercise this part, run on the census board with the verdict each one prints.",
+      "runner": "conformance/census.py"
+    }
+  },
+  "part": "Sega 315-5124, 315-5246 and 315-5378 video display processors, with the sound generator inside each",
+  "verified": true,
+  "documents": {
+    "markIIIManual": {
+      "publisher": "Sega, by its own page footer",
+      "title": "Software Reference Manual for the SEGA Mark III Console",
+      "file": "manufacturer/SoftwareReferenceManualForSegaMarkIIIEU.pdf",
+      "sha256": "166f09331ba9df055f7a352f10c6a7843911470bc72d9347eda4a0de86e8cfce",
+      "readOn": "2026-10-27",
+      "howRead": "Read in full from its text layer, all 45 pages; it is a retyped document with no page images to compare against."
+    },
+    "macdonald": {
+      "publisher": "Charles MacDonald",
+      "title": "Sega Master System VDP documentation",
+      "file": "community/msvdp-20021112.txt",
+      "sha256": "dc16f8e687b8b137d9f7d457659135ebb7b21e6e7874250fac0719dd1eb6207c",
+      "readOn": "2026-10-27",
+      "howRead": "Read in full, all 1,110 lines."
+    },
+    "smspower": {
+      "publisher": "SMS Power",
+      "title": "SN76489",
+      "file": "community/SN76489.html",
+      "sha256": "14d146c13d4d98a04b2c2c05498753bc60197696cea1b73860bfa23416cd15ce",
+      "readOn": "2026-10-27",
+      "howRead": "Read in its print view, the sections on the shift register, the tone counters, the power-on state and the stereo extension."
+    }
+  },
+  "facts": {
+    "registerCount": {
+      "value": 11,
+      "quotes": [
+        "The VDP is controlled by eleven internal 8-bit registers.",
+        "The register number is r3-r0, and ranges from 0 through 10 ($00 through $0A)."
+      ],
+      "page": "12, 13",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::PortTest.test_the_part_has_the_printed_number_of_registers"
+      ]
+    },
+    "commandCodes": {
+      "value": {
+        "0": "read video memory",
+        "1": "write video memory",
+        "2": "write a register",
+        "3": "write colour memory"
+      },
+      "quote": "A two bit mode field in bits 7 and 6 of the second COMMAND byte determines one of four operations:",
+      "page": "12",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::PortTest.test_the_four_codes_do_what_the_manual_names"
+      ]
+    },
+    "ports": {
+      "value": {
+        "data": "0xBE",
+        "control": "0xBF"
+      },
+      "quotes": [
+        "I/O port $BE is the read/write DATA register.",
+        "I/O location $BF is the COMMAND register for a write, and the STATUS register for a read."
+      ],
+      "page": "12",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::PortTest.test_the_printed_ports_reach_data_and_control"
+      ]
+    },
+    "autoIncrement": {
+      "value": true,
+      "quotes": [
+        "The VDP has an address auto-increment feature.",
+        "As with the Video RAM, repeated writes to Output Port $BE automatically increment the Color RAM address."
+      ],
+      "page": "13",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::PortTest.test_data_writes_step_through_memory_and_colour_ram"
+      ]
+    },
+    "readsOrWrites": {
+      "value": "reads and writes do not share one setup",
+      "quote": "NOTE: The autoincrement feature works only with all reads or all writes.",
+      "page": "13",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::PortTest.test_a_read_setup_followed_by_writes_still_writes"
+      ]
+    },
+    "accessBound": {
+      "value": {
+        "blankingTStates": 16,
+        "activeTStates": 29
+      },
+      "quotes": ["16 Z80A T-States during VBLANK", "29 Z80A T-States during active video."],
+      "page": "12",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::AccessTest.test_accesses_at_the_printed_blanking_rate_all_land",
+        "conformance/hardware.test.py::AccessTest.test_accesses_at_the_printed_active_rate_all_land",
+        "conformance/hardware.test.py::AccessTest.test_faster_accesses_lose_one"
+      ]
+    },
+    "statusBits": {
+      "value": {
+        "7": "frame or line interrupt",
+        "6": "nine sprites on a line",
+        "5": "sprite collision"
+      },
+      "quotes": [
+        "bit 7 --- 1: VBLANK Interrupt, 0: H-Line Interrupt [if enabled].",
+        "bit 6 --- 1: 9 sprites on a raster line.",
+        "bit 5 --- 1: Sprite Collision."
+      ],
+      "page": "5",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": ["conformance/hardware.test.py::StatusTest.test_the_status_bits_sit_where_printed"]
+    },
+    "statusClears": {
+      "value": "reading the status clears the interrupt request",
+      "quote": "Reading the I/O part at $BF does two things. First, it clears the interrupt request line from the VDP chip.",
+      "page": "5",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::StatusTest.test_reading_the_status_releases_the_request"
+      ]
+    },
+    "interruptEnables": {
+      "value": {
+        "frame": "R1 bit 5",
+        "line": "R0 bit 4"
+      },
+      "quotes": ["b5     IE     Interrupt Enable.", "b4     IE1    Interrupt Enable."],
+      "page": "15",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": ["conformance/hardware.test.py::StatusTest.test_each_enable_gates_its_own_request"]
+    },
+    "lineCounter": {
+      "value": {
+        "interruptOnLine": "R10 + 1, counting raster lines from one"
+      },
+      "quotes": [
+        "The value loaded into R10 should be one less than the raster line you wish to \"trigger\" the interrupt.",
+        "The Raster Line Interrupt continues to generate interrupt requests as the beam sweeps the screen."
+      ],
+      "page": "18",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::LineCounterTest.test_the_request_comes_as_raster_line_r10_plus_one_begins_counting_from_one"
+      ]
+    },
+    "lineCounterDelay": {
+      "value": "one interrupt",
+      "quote": "There is a one interrupt delay between loading R10 and having the value take effect.",
+      "page": "18",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::LineCounterTest.test_a_new_value_takes_effect_one_request_later"
+      ]
+    },
+    "colourRam": {
+      "value": {
+        "entries": 32,
+        "bits": 6
+      },
+      "quote": "The Color RAM is organizeed as 32 6-bit values.",
+      "page": "6",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246"],
+      "heldBy": [
+        "conformance/hardware.test.py::ColourTest.test_colour_ram_holds_the_printed_entries_and_bits"
+      ]
+    },
+    "intensities": {
+      "value": [0, 0.3333333333333333, 0.6666666666666666, 1],
+      "quote": "where R1:R0, G1:G0 and B1:B0 define four intensities for red, green, and blue as follows:",
+      "page": "10",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246"],
+      "heldBy": [
+        "conformance/hardware.test.py::ColourTest.test_each_component_has_the_four_printed_intensities"
+      ]
+    },
+    "spritePalette": {
+      "value": 16,
+      "quote": "Sprite colors are always taken from the second group of 16 colors in the color RAM.",
+      "page": "8",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::ColourTest.test_sprites_draw_from_the_second_sixteen"
+      ]
+    },
+    "borderPalette": {
+      "value": 16,
+      "quote": "The border color is taken from the second bank of colors in VDP Color RAM.",
+      "page": "17",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::ColourTest.test_the_border_draws_from_the_second_sixteen"
+      ]
+    },
+    "screenSize": {
+      "value": {
+        "dots": 256,
+        "lines": 192
+      },
+      "quote": "The screen resolution of the VDP is 256 pixels horizontal, and 192 pixels vertical.",
+      "page": "6",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": ["conformance/display.test.py::ScreenTest.test_the_active_area_is_the_printed_size"]
+    },
+    "tileWord": {
+      "value": {
+        "index": 9,
+        "flips": 2,
+        "palette": 1,
+        "priority": 1
+      },
+      "quotes": [
+        "Which of 512 characters to display at the character position (9 bits).",
+        "Whether or not to flip the character horizontally or vertically (2 bits).",
+        "Which of two sets of 16 colors to use for the character (1 bit).",
+        "Whether sprites obscure the background, or vice versa (1 bit)."
+      ],
+      "page": "7",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/display.test.py::ScreenTest.test_the_tile_word_holds_the_printed_fields"
+      ]
+    },
+    "patternBytes": {
+      "value": 32,
+      "quotes": [
+        "32 bytes define a single 8 by 8 pixel character.",
+        "The top section is color #5 (reading corresponding bits from MSB to LSB, 0101)."
+      ],
+      "page": "6, 11",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/display.test.py::ScreenTest.test_the_printed_letter_c_draws_as_printed"
+      ]
+    },
+    "backgroundPriority": {
+      "value": "colours 1 to 15 of a priority tile cover sprites",
+      "quotes": [
+        "If this bit is set to 1, background colors #1-15 appear over the sprites.",
+        "Background color #0 always appears under the sprites."
+      ],
+      "page": "10",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/display.test.py::ScreenTest.test_priority_covers_sprites_except_with_colour_0"
+      ]
+    },
+    "nameTableBase": {
+      "value": {
+        "0xFF": "0x3800",
+        "0xF1": "0x0000"
+      },
+      "quote": "It positions the 2048 screen map to one of eight starting addresses, on 2048 byte boundaries, according to the following table:",
+      "page": "16",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/display.test.py::ScreenTest.test_register_2_places_the_map_where_printed"
+      ]
+    },
+    "verticalWrap": {
+      "value": 28,
+      "quote": "Rather, it is at the 28th character row.",
+      "page": "17",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/display.test.py::ScrollTest.test_vertical_scroll_wraps_at_the_28th_row"
+      ]
+    },
+    "verticalLatch": {
+      "value": "register 9 is latched in vertical blanking",
+      "quote": "Register 9 is latched in vertical blanking.",
+      "page": "17",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/display.test.py::ScrollTest.test_register_9_waits_for_vertical_blanking"
+      ]
+    },
+    "topLock": {
+      "value": {
+        "rows": 2,
+        "bit": "R0 bit 6"
+      },
+      "quote": "If HSI (Horiz Scroll Inhibit) is set to 1, the 2 character high horizontal strip at the top of the screen does not scroll.",
+      "page": "7",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": ["conformance/display.test.py::ScrollTest.test_the_top_two_rows_hold_still"]
+    },
+    "rightLock": {
+      "value": {
+        "columns": 8,
+        "bit": "R0 bit 7"
+      },
+      "quote": "If VSI (Vert. Scroll Inhibit) is set to 1, the vertical band of 8 characters at the right edge of the screen does not scroll.",
+      "page": "7",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": ["conformance/display.test.py::ScrollTest.test_the_right_eight_columns_hold_still"]
+    },
+    "leftBlank": {
+      "value": "R0 bit 5 blanks the left column in the border colour",
+      "quote": "Blank left char column (border color).",
+      "page": "15",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": ["conformance/display.test.py::ScrollTest.test_the_left_column_shows_the_border"]
+    },
+    "spriteCount": {
+      "value": 64,
+      "quote": "The VDP provides 64 independent sprites.",
+      "page": "8",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/display.test.py::SpriteTest.test_the_table_holds_the_printed_number_of_sprites"
+      ]
+    },
+    "spriteSize": {
+      "value": {
+        "0": "8 by 8",
+        "1": "8 by 16"
+      },
+      "quote": "A control bit controls the size of all sprites: 0 for an 8H by 8V spite, 1 for an 8H by 16V sprite.",
+      "page": "8",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/display.test.py::SpriteTest.test_the_size_bit_picks_the_printed_heights"
+      ]
+    },
+    "spritesPerLine": {
+      "value": 8,
+      "quotes": [
+        "Up to eight sprites can occupy a single horizontal raster line.",
+        "bit 6 --- 1: 9 sprites on a raster line."
+      ],
+      "page": "8",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/display.test.py::SpriteTest.test_eight_sprites_show_and_a_ninth_is_flagged"
+      ]
+    },
+    "terminator": {
+      "value": "0xD0",
+      "quote": "The special code $D0 is placed as a vertical position code to tell the sprite hardware to stop searching the list for sprites.",
+      "page": "9",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": ["conformance/display.test.py::SpriteTest.test_the_terminator_stops_the_search"]
+    },
+    "spriteShift": {
+      "value": 8,
+      "quote": "A VDP control bit (Sprite Shift, bit 3 of R0) shifts all sprites 8 pixels to the left.",
+      "page": "9",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/display.test.py::SpriteTest.test_the_shift_bit_moves_sprites_the_printed_distance"
+      ]
+    },
+    "spriteTableBase": {
+      "value": {
+        "0xFF": "0x3F00"
+      },
+      "quotes": [
+        "This 256 byte table can be positioned at one of 64 starting addresses in Video RAM.",
+        "VDP register R5 is usually set to $FF to position the Sprite Attribute Table at $3F00, the last 256 bytes of Video RAM."
+      ],
+      "page": "8, 16",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/display.test.py::SpriteTest.test_register_5_places_the_table_where_printed"
+      ]
+    },
+    "spritePatterns": {
+      "value": {
+        "0xFB": "first 8K",
+        "0xFF": "second 8K"
+      },
+      "quote": "Only two values are valid for R6:",
+      "page": "17",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": ["conformance/display.test.py::SpriteTest.test_register_6_picks_the_printed_half"]
+    },
+    "gunCounters": {
+      "value": {
+        "vertical": "0x7E",
+        "horizontal": "0x7F"
+      },
+      "quotes": [
+        "$7E           in            Gun Spot (vertical)",
+        "The beam position is latched into horizontal and vertical registers, which are read at input ports $7E (vertical) and $7F (horizontal)."
+      ],
+      "page": "22, 25",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "heldBy": [
+        "conformance/hardware.test.py::CounterTest.test_the_counter_ports_are_the_printed_ones"
+      ]
+    },
+    "powerOn": {
+      "value": {
+        "R0": "0x36",
+        "R1": "0xA0",
+        "R2": "0xFF",
+        "R3": "0xFF",
+        "R4": "0xFF",
+        "R5": "0xFF",
+        "R6": "0xFB",
+        "R7": "0x00",
+        "R8": "0x00",
+        "R9": "0x00",
+        "R10": "0xFF"
+      },
+      "quote": "The VDP registers are initialized at power on to the following values:",
+      "page": "18",
+      "document": "markIIIManual",
+      "governs": ["315-5124", "315-5246", "315-5378"],
+      "unreachable": "The manual does not say whether the chip or the boot program sets these, so no test of the part can hold them. The part powers on scrambled, as the family standard asks, and the census board starts every cartridge from these values, because cartridges such as the SMS Sprite Test rely on them and never write register 0.",
+      "heldBy": []
+    }
+  },
+  "notStated": {
+    "portDecode": {
+      "value": "A7, A6 and A0 decode every port from 40h to BFh",
+      "verified": false,
+      "why": "The manual names four ports and says nothing of mirrors.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "The address decoding for the I/O ports is done with A7, A6, and A0 of the Z80 address bus, so the VDP locations are mirrored:",
+      "document": "macdonald",
+      "howToSettleIt": "Read port 41h and port 7Fh on a console and compare.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "firstByteUpdatesAddress": {
+      "value": true,
+      "verified": false,
+      "why": "The manual says the command register takes two bytes, not when the low address byte lands.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "When the first byte is written, the lower 8 bits of the address register are updated.",
+      "document": "macdonald",
+      "howToSettleIt": "Write one control byte, then read the data port, on a console.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "writeLoadsReadBuffer": {
+      "value": true,
+      "verified": false,
+      "why": "The manual does not describe a read buffer.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "An additional quirk is that writing to the data port will also load the buffer with the value written.",
+      "document": "macdonald",
+      "howToSettleIt": "Write a byte to the data port, then read it back with no read setup between.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "lostAccess": {
+      "value": "a second access asked for before the first lands replaces the first",
+      "verified": false,
+      "why": "The manual prints how often the part can be reached, not what happens when it is reached faster.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002, whose explanation is a guess in its own words, and the TMS9918 member's measured rule, inherited by assumption",
+      "communityQuote": "I think the cause is that the VDP can only allow so many CPU accesses to VRAM and CRAM during a scanline, and if you write when the VDP is busy processing a previous write, the data is simply gone.",
+      "document": "macdonald",
+      "howToSettleIt": "A logic analyser on the VDP's address, data and interrupt pins of a running console, or a test cartridge that writes what it measured to save memory, as decisions.md D8 of the plan describes",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "accessLead": {
+      "value": {
+        "activeTicks": 78,
+        "blankingTicks": 30
+      },
+      "verified": false,
+      "why": "The manual's bounds are rates for software to keep, not measurements of the part, and two test cartridges written against hardware exceed both. In the active display this package lets an access land 26 T states after the one before it: the SEGA Master System TestSuite, built on devkitSMS and run on consoles, writes its text every 26 T states with the display on, faster than the printed 29. In blanking it waits 10 T states, under the 11 the processor needs to issue two writes back to back, so no access there is lost: Charles MacDonald's Line Interrupt Test #1 writes every 12 T states with the display off, faster than the printed 16. divergences.json records both.",
+      "source": "The spacing measured on the census board from the two test cartridges, at three master ticks per processor clock",
+      "howToSettleIt": "A test cartridge that writes video memory at decreasing spacings in the active display and in blanking, reads every byte back and reports the first spacing that loses one, run on each console part.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "lineEvent": {
+      "value": {
+        "dot": 266,
+        "hCounter": "0x85"
+      },
+      "verified": false,
+      "why": "Neither document says where in a line the V counter steps or the interrupts rise.",
+      "source": "Genesis Plus GX at a5834b3df455c49bb97bfaa328c20845831f576b, https://github.com/ekeeke/Genesis-Plus-GX. Its core/hvc.h carries Charles MacDonald's copyright, so it counts with his document as one lineage. Facts only; no code is taken. MacDonald's document says it does not know",
+      "communityQuote": "Currently, I don't have information about where events occur within a single scanline.",
+      "document": "macdonald",
+      "howToSettleIt": "A logic analyser on the VDP's address, data and interrupt pins of a running console, or a test cartridge that writes what it measured to save memory, as decisions.md D8 of the plan describes",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "frameLine": {
+      "value": {
+        "192": "0xC1",
+        "224": "0xE1",
+        "240": "0xF1"
+      },
+      "verified": false,
+      "why": "The manual says the frame request comes from vertical blanking, not on which line.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "192     $C1",
+      "document": "macdonald",
+      "howToSettleIt": "Read the V counter in the frame interrupt handler on a console.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "lineCounterLines": {
+      "value": {
+        "countsOn": "lines 0 to the screen height",
+        "reloadsOn": "every later line"
+      },
+      "verified": false,
+      "why": "The manual gives the request lines, not when the counter reloads.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuotes": [
+        "The counter is decremented on lines 0-191 and 192.",
+        "The counter is reloaded on lines 193-261."
+      ],
+      "document": "macdonald",
+      "howToSettleIt": "Program register 10 in the bottom border and count the first request of the next frame.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "vCounter": {
+      "value": "the runs in segavdp/timing.py",
+      "verified": false,
+      "why": "The manual names the gun's vertical register only.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "00-DA, D5-FF",
+      "document": "macdonald",
+      "howToSettleIt": "Read port 7Eh on every line of a frame on each region and height.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "hCounter": {
+      "value": {
+        "runs": ["0x00-0x93", "0xE9-0xFF"],
+        "dotZero": 0
+      },
+      "verified": false,
+      "why": "The manual names the gun's horizontal register only.",
+      "source": "Genesis Plus GX at a5834b3df455c49bb97bfaa328c20845831f576b, https://github.com/ekeeke/Genesis-Plus-GX. Its core/hvc.h carries Charles MacDonald's copyright, so it counts with his document as one lineage. Facts only; no code is taken. MacDonald's own table was taken on a Genesis and does not add up to 342 dots",
+      "communityQuote": "The H counter is 9 bits, and reading it returns the upper 8 bits.",
+      "document": "macdonald",
+      "howToSettleIt": "Latch the counter from the gun's TH line at known dots on a console.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "tallScreens": {
+      "value": {
+        "224": "M2 and M1",
+        "240": "M2 and M3"
+      },
+      "verified": false,
+      "why": "The Mark III manual describes the first part only, which has no taller screen.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "This mode does not work on NTSC machines.",
+      "document": "macdonald",
+      "howToSettleIt": "Select each combination on a second console part and count the active lines.",
+      "governs": ["315-5246", "315-5378"]
+    },
+    "nameTableMask": {
+      "value": "R2 bit 0 ANDs bit 4 of the row",
+      "verified": false,
+      "why": "The manual tells software to write FFh to R2's low bits and does not say what other values do.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "However, the SMS VDP will logically AND bit 0 with the VDP address, meaning if bit 0 is cleared, bit 4 of the name table row is forced to zero.",
+      "document": "macdonald",
+      "howToSettleIt": "Clear R2 bit 0 on a first console part and draw rows 16 to 23.",
+      "governs": ["315-5124"]
+    },
+    "spriteTableMask": {
+      "value": "R5 bit 0 clear reads positions and indices from the low half",
+      "verified": false,
+      "why": "The manual prints R5 bit 0 as 1 and nothing else.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "For the SMS VDP only, if bit 0 is cleared the sprite X position and tile index will be fetched from the lower 128 bytes of the sprite attribute table instead of the upper 128 bytes.",
+      "document": "macdonald",
+      "howToSettleIt": "Clear R5 bit 0 on a first console part with different data in each half.",
+      "governs": ["315-5124"]
+    },
+    "spritePatternMask": {
+      "value": {
+        "R6 bit 1": "index bit 8",
+        "R6 bit 0": "index bit 6"
+      },
+      "verified": false,
+      "why": "The manual lists two valid R6 values only. Which low bit masks which index bit is this package's reading of an order the source does not spell out.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "For the SMS VDP only, bits 1 and 0 act as an AND mask over bits 8 and 6 of the tile index if cleared.",
+      "document": "macdonald",
+      "howToSettleIt": "Clear each R6 low bit alone on a first console part with sprites using each index bit.",
+      "governs": ["315-5124"]
+    },
+    "zoom": {
+      "value": {
+        "315-5124": "four sprites wide",
+        "others": "eight"
+      },
+      "verified": false,
+      "why": "The Mark III manual does not mention zoom.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "it will only allow the first four sprites of the eight shown on a scanline to be zoomed horizontally and vertically, and the remaining four will be zoomed vertically.",
+      "document": "macdonald",
+      "howToSettleIt": "Zoom eight sprites on one line on each console part.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "terminatorOnTallScreens": {
+      "value": "D0h ends the table only on a 192 line screen",
+      "verified": false,
+      "why": "The Mark III manual has no taller screen.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "This only works in the 192-line display mode, in the 224 and 240-line modes a Y coordinate of $D0 has no special meaning.",
+      "document": "macdonald",
+      "howToSettleIt": "Put D0h in the table on a 224 line screen.",
+      "governs": ["315-5246", "315-5378"]
+    },
+    "spriteY": {
+      "value": "a sprite starts on the line after its Y",
+      "verified": false,
+      "why": "The manual says vertical position, not its offset.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "The Y coordinate is treated as being plus one, so a value of zero would place a sprite on scanline 1 and not scanline zero.",
+      "document": "macdonald",
+      "howToSettleIt": "Place a sprite at Y 0 and find its first line.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "overflowCountsAnySprite": {
+      "value": true,
+      "verified": false,
+      "why": "The manual says nine sprites on a raster line.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "Note that this is regardless of the sprite X coordinate or pattern data, so eight transprent sprites that were off-screen would count towards a sprite overflow.",
+      "document": "macdonald",
+      "howToSettleIt": "Put nine transparent sprites on one line off the screen's right edge.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "collisionBit": {
+      "value": 5,
+      "verified": false,
+      "why": "The manual prints bit 5. MacDonald prints bit 5 in his status table and bit 6 in his sprite section.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002, which contradicts itself; divergences.json records it",
+      "communityQuote": "In the situation where any two sprites from any of the eight positions have opaque pixels that overlap, the VDP will set bit 6 of the status flags indicating a sprite collision has occured.",
+      "document": "macdonald",
+      "howToSettleIt": "Overlap two sprites and read the status on a console.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "fineScrollArea": {
+      "value": "the backdrop",
+      "verified": false,
+      "why": "The manual says scrolling wraps, not what fills the dots the fine scroll uncovers.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002, which also says sprite pattern data sometimes shows there and that how is unknown",
+      "communityQuote": "However, the SMS VDP does not, and instead this area is filled with the backdrop color (and sometimes pattern data from sprite #0, but exactly how this is selected is unknown).",
+      "document": "macdonald",
+      "howToSettleIt": "Scroll by 1 to 7 and photograph the left edge on a console.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "scrollLatch": {
+      "value": {
+        "horizontal": "at the line event",
+        "vertical": "at the start of the frame"
+      },
+      "verified": false,
+      "why": "The manual says R9 is latched in vertical blanking. Where R8 is latched is not printed.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002, and Genesis Plus GX at a5834b3df455c49bb97bfaa328c20845831f576b, https://github.com/ekeeke/Genesis-Plus-GX. Its core/hvc.h carries Charles MacDonald's copyright, so it counts with his document as one lineage. Facts only; no code is taken for the order of drawing and interrupting in a line",
+      "communityQuote": "The vertical scroll value cannot be changed during the active display period, any changes made will be stored in a temporary location and used only when the active display period ends",
+      "document": "macdonald",
+      "howToSettleIt": "A logic analyser on the VDP's address, data and interrupt pins of a running console, or a test cartridge that writes what it measured to save memory, as decisions.md D8 of the plan describes",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "legacyPalette": {
+      "value": [
+        "0x00",
+        "0x00",
+        "0x08",
+        "0x0C",
+        "0x10",
+        "0x30",
+        "0x01",
+        "0x3C",
+        "0x02",
+        "0x03",
+        "0x05",
+        "0x0F",
+        "0x04",
+        "0x33",
+        "0x15",
+        "0x3F"
+      ],
+      "verified": false,
+      "why": "No document prints the colours a console part shows in the TMS9918 modes.",
+      "source": "Genesis Plus GX at a5834b3df455c49bb97bfaa328c20845831f576b, https://github.com/ekeeke/Genesis-Plus-GX. Its core/hvc.h carries Charles MacDonald's copyright, so it counts with his document as one lineage. Facts only; no code is taken, core/vdp_render.c tms_crom. MacDonald describes the palette as hardwired without giving it",
+      "communityQuote": "This is opposed to the SMS2 which forces TMS9918 graphics to be shown using a hardwired palette that is independant of the colors defined in CRAM.",
+      "document": "macdonald",
+      "howToSettleIt": "Photograph each of the sixteen colours in Graphics I on each console part.",
+      "governs": ["315-5124", "315-5246"]
+    },
+    "handheldLegacyColours": {
+      "value": "colour RAM entries 16 to 31",
+      "verified": false,
+      "why": "No Sega document describes the Game Gear part.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "When using the TMS9918 display modes, all background and sprite graphics are shown using colors 16-31.",
+      "document": "macdonald",
+      "howToSettleIt": "Draw each colour in Graphics I on a Game Gear.",
+      "governs": ["315-5378"]
+    },
+    "handheldColourRam": {
+      "value": {
+        "entries": 32,
+        "bits": 12,
+        "latch": "even byte latched, odd byte stores the pair"
+      },
+      "verified": false,
+      "why": "No Sega document describes the Game Gear part.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuotes": [
+        "In Game Gear mode, CRAM has been expanded to 32 words (64 bytes) Each word defines a single color, like so:",
+        "Writing an even CRAM address causes the data written to be stored in a latch, and writing to an odd CRAM address makes the VDP write the contents of the latch as well as the new data from the CPU to the current CRAM entry."
+      ],
+      "document": "macdonald",
+      "howToSettleIt": "Write single even bytes on a Game Gear and look for a change.",
+      "governs": ["315-5378"]
+    },
+    "handheldMasterSystemColour": {
+      "value": "a six bit write is widened to twelve by repeating each two bit component",
+      "verified": false,
+      "why": "The source says the two modes share colours without saying how a six bit value is stored in a twelve bit entry.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002, for the sharing; the widening is this package's",
+      "communityQuote": "Switching between modes does not change any colors that were previously set.",
+      "document": "macdonald",
+      "howToSettleIt": "Write a colour in Master System mode, switch the Game Gear to its own mode, and photograph it.",
+      "governs": ["315-5378"]
+    },
+    "handheldIgnoredBits": {
+      "value": "applied everywhere",
+      "verified": false,
+      "why": "The source says R0 bits 0 and 5 have no effect on a Game Gear, which may mean nothing visible in its smaller window. This package applies both on every part.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "Bits 0 and 5 have no effect on the GameGear in either mode, while bit 6 has no effect in GG mode but works normally in SMS mode.",
+      "document": "macdonald",
+      "howToSettleIt": "Set R0 bit 5 on a Game Gear and read the colour of dot 48 on its window.",
+      "governs": ["315-5378"]
+    },
+    "statusLowBits": {
+      "value": "scrambled at power on and held",
+      "verified": false,
+      "why": "The manual says bits 4 to 0 have no significance.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "The remaining bits are not set by the VDP, and return garbage values for the SMS and SMS 2.",
+      "document": "macdonald",
+      "howToSettleIt": "Read the status many times on a console and record the low bits.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "legacySpriteShift": {
+      "value": 8,
+      "verified": false,
+      "why": "The manual describes mode 4 only.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "Bit 3 of register $00 (early clock) also affects sprites in the TMS9918 modes, by the same amount of 8 pixels.",
+      "document": "macdonald",
+      "howToSettleIt": "Set R0 bit 3 in Graphics II with a sprite at X 8.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "legacyOverflow": {
+      "value": "a fifth sprite in a legacy mode sets bit 6 and leaves the low bits alone",
+      "verified": false,
+      "why": "No document says what a Sega part reports for the TMS9918 fifth sprite.",
+      "source": "This package's choice, from the TMS9918 member's rule and MacDonald's note that the low bits are not set",
+      "howToSettleIt": "Put five sprites on a line in Graphics II on a console and read the status.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "invalidTextMode": {
+      "value": "the backdrop only",
+      "verified": false,
+      "why": "The source describes the mode only loosely, and no fact here is solid enough to draw it.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "The invalid text mode is identical to TMS9918 text mode.",
+      "document": "macdonald",
+      "howToSettleIt": "Select each invalid text combination on each console part and photograph it.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "reset": {
+      "value": {
+        "registers": "R0 and R1 cleared",
+        "position": "line 0, dot 0",
+        "status": "cleared"
+      },
+      "verified": false,
+      "why": "Nothing printed says what the part's reset input does.",
+      "source": "The TMS9918 member's reset, inherited by assumption",
+      "howToSettleIt": "Pulse the console's reset with known register contents and read them back through their effect.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "ntsc240": {
+      "value": {
+        "lines": 262,
+        "vCounter": ["0x00-0xFF", "0x00-0x05"]
+      },
+      "verified": false,
+      "why": "The source prints a counter run of 263 values for a 262 line frame and says the screen rolls.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "This mode does not work on NTSC machines.",
+      "document": "macdonald",
+      "howToSettleIt": "Select the 240 line screen on an NTSC second console part and read the V counter every line.",
+      "governs": ["315-5246"]
+    },
+    "spritePriority": {
+      "value": "the lower numbered sprite wins",
+      "verified": false,
+      "why": "The manual says the higher numbered sprite is on top. divergences.json records why this package does the opposite.",
+      "source": "Charles MacDonald, Sega Master System VDP documentation, 12 November 2002",
+      "communityQuote": "An opaque pixel from a lower-entry sprite is displayed over any opaque pixel from a higher-entry sprite.",
+      "document": "macdonald",
+      "howToSettleIt": "Overlap sprite 0 and sprite 1 on a console.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "soundShiftRegister": {
+      "value": {
+        "bits": 16,
+        "taps": "0x0009"
+      },
+      "verified": false,
+      "why": "TI's data sheet does not print the register, and no Sega document describes the copy inside the VDP.",
+      "source": "SMS Power, SN76489, the page maintained by Maxim",
+      "communityQuote": "For the SMS (1 and 2), Genesis and Game Gear, the tapped bits are bits 0 and 3 ($0009), fed back into bit 15.",
+      "document": "smspower",
+      "howToSettleIt": "Record white noise from a console's audio output.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "soundNoiseReset": {
+      "value": "0x8000",
+      "verified": false,
+      "why": "The TI data sheet says a noise write clears the register, not to what.",
+      "source": "SMS Power, SN76489, the page maintained by Maxim",
+      "communityQuote": "When the noise register is written to, the shift register is reset, such that all bits are zero except for the highest bit.",
+      "document": "smspower",
+      "howToSettleIt": "Record periodic noise right after a noise register write.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "soundLowPeriods": {
+      "value": "periods 0 and 1 hold the output high",
+      "verified": false,
+      "why": "The TI data sheet does not say what a zero period does.",
+      "source": "SMS Power, SN76489, the page maintained by Maxim",
+      "communityQuote": "If the register value is zero or one then the output is a constant value of +1.",
+      "document": "smspower",
+      "howToSettleIt": "Write periods 0 and 1 and record the output.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "soundPowerOn": {
+      "value": {
+        "periods": 0,
+        "attenuations": 15
+      },
+      "verified": false,
+      "why": "No document prints the part's power-on state; the source hedges its own claim.",
+      "source": "SMS Power, SN76489, the page maintained by Maxim",
+      "communityQuote": "The Sega integrated versions seem to start initialised with zeroes in the tone/noise registers and ones in the volume registers (silence).",
+      "document": "smspower",
+      "howToSettleIt": "Record a console's audio output before software writes the generator.",
+      "governs": ["315-5124", "315-5246", "315-5378"]
+    },
+    "soundStereo": {
+      "value": {
+        "right": "bits 0 to 3",
+        "left": "bits 4 to 7",
+        "powerOn": "0xFF"
+      },
+      "verified": false,
+      "why": "No Sega document describes the Game Gear part. The power-on value is this package's.",
+      "source": "SMS Power, SN76489, the page maintained by Maxim",
+      "communityQuote": "If a bit is set, the corresponding channel is output to the corresponding side.",
+      "document": "smspower",
+      "howToSettleIt": "Write each bit and listen on each side of a Game Gear's headphone output.",
+      "governs": ["315-5378"]
+    }
+  }
+}

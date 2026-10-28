@@ -1,0 +1,211 @@
+{
+  "note": "Every place two sources part, or one source parts with itself, and which way this package went. The Mark III manual is the only Sega document; everything past it rests on community research and the implementations that follow it.",
+  "authority": {
+    "order": [
+      "the Mark III reference manual",
+      "Charles MacDonald's VDP document",
+      "Genesis Plus GX for what neither covers"
+    ],
+    "why": "A manufacturer's sentence outranks an implementation unless it contradicts what software that ran on the part needs; where a source contradicts itself, the specific claim wins over the summary."
+  },
+  "readOn": "2026-10-27",
+  "divergences": [
+    {
+      "id": "sprite-priority",
+      "severity": "contradiction",
+      "status": "open",
+      "topic": "Which of two overlapping sprites is drawn on top.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "The higher numbered sprite.",
+        "quote": "When two sprites overlap, the higher numbered sprite will be displayed on top.",
+        "source": "Software Reference Manual for the SEGA Mark III Console, page 9"
+      },
+      "referenceSays": {
+        "rung": 3,
+        "claim": "The lower numbered sprite, the first one in the line buffer.",
+        "quote": "An opaque pixel from a lower-entry sprite is displayed over any opaque pixel from a higher-entry sprite.",
+        "source": "Charles MacDonald, Sega Master System VDP documentation, section 10"
+      },
+      "thisPackageDid": {
+        "claim": "Draws the lower numbered sprite on top.",
+        "why": "The manual is a retyped copy that carries other typing errors, and the community document was written against running hardware. The test cartridges' sprite pages are the measurement that decides it, and the census counts how often real software overlaps two sprites."
+      },
+      "packageFollows": "reference",
+      "wouldCloseIt": "Overlap sprite 0 and sprite 1 with different colours on a console and photograph the result."
+    },
+    {
+      "id": "collision-bit",
+      "severity": "low",
+      "status": "closed",
+      "topic": "Which status bit is the sprite collision flag.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "Bit 5.",
+        "quote": "bit 5 --- 1: Sprite Collision.",
+        "source": "Software Reference Manual for the SEGA Mark III Console, page 5"
+      },
+      "referenceSays": {
+        "rung": 3,
+        "claim": "Bit 5 in the status table, bit 6 in the sprite section.",
+        "quote": "In the situation where any two sprites from any of the eight positions have opaque pixels that overlap, the VDP will set bit 6 of the status flags indicating a sprite collision has occured.",
+        "source": "Charles MacDonald, Sega Master System VDP documentation, sections 4 and 10"
+      },
+      "thisPackageDid": {
+        "claim": "Sets bit 5.",
+        "why": "The manual and the community document's own status table agree; its sprite section is the odd one out."
+      },
+      "packageFollows": "document",
+      "wouldCloseIt": "Nothing further: two sources agree and the third contradicts itself."
+    },
+    {
+      "id": "frame-flag-line",
+      "severity": "medium",
+      "status": "open",
+      "topic": "On which line the frame flag rises.",
+      "referenceSays": {
+        "rung": 3,
+        "claim": "The status section says the first line after the active display; the interrupt section's table says line C1h, the second.",
+        "quotes": [
+          "This flag is set on the first line after the end of the active display period.",
+          "192     $C1"
+        ],
+        "source": "Charles MacDonald, Sega Master System VDP documentation, sections 4 and 12"
+      },
+      "thisPackageDid": {
+        "claim": "Raises it as the V counter reaches C1h, E1h or F1h.",
+        "why": "The table is the specific claim and the one Genesis Plus GX follows; the status section reads as a summary."
+      },
+      "packageFollows": "reference",
+      "wouldCloseIt": "Read the V counter first thing in the frame interrupt handler on a console."
+    },
+    {
+      "id": "h-counter-table",
+      "severity": "medium",
+      "status": "open",
+      "topic": "Which values the H counter takes across a line.",
+      "referenceSays": {
+        "rung": 3,
+        "claim": "A table taken on a Genesis whose ranges do not add up to 342 dots, with a warning that a Master System may differ.",
+        "quote": "Be warned that a real SMS may have different results.",
+        "source": "Charles MacDonald, Sega Master System VDP documentation, section 11"
+      },
+      "thisPackageDid": {
+        "claim": "Counts 00h to 93h, then E9h to FFh, two dots a value, with 00h on the first active dot.",
+        "why": "Those are Genesis Plus GX's values, which add up to the 171 values a 342 dot line needs. They share MacDonald's lineage, so they are one source, not two."
+      },
+      "packageFollows": "neither",
+      "wouldCloseIt": "Latch the counter with a light gun at known dots on a console."
+    },
+    {
+      "id": "ntsc-240-counter",
+      "severity": "low",
+      "status": "open",
+      "topic": "How the V counter runs on a 240 line screen at 60 Hz.",
+      "referenceSays": {
+        "rung": 3,
+        "claim": "00h to FFh, then 00h to 06h: 263 values for a 262 line frame, on a screen it also says rolls.",
+        "quote": "This mode does not work on NTSC machines.",
+        "source": "Charles MacDonald, Sega Master System VDP documentation, section 11"
+      },
+      "thisPackageDid": {
+        "claim": "Runs 00h to FFh, then 00h to 05h, so the frame stays 262 lines.",
+        "why": "A frame of 263 lines contradicts the same document's 262 line frame. No game is expected to use this screen; the census counts whether any does."
+      },
+      "packageFollows": "neither",
+      "wouldCloseIt": "Read the V counter every line of a 240 line screen on an NTSC second console part."
+    },
+    {
+      "id": "register-count",
+      "severity": "low",
+      "status": "notADisagreement",
+      "topic": "How many registers the part has.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "Eleven, numbered 0 to 10.",
+        "quote": "The VDP is controlled by eleven internal 8-bit registers.",
+        "source": "Software Reference Manual for the SEGA Mark III Console, page 12"
+      },
+      "referenceSays": {
+        "rung": 3,
+        "claim": "Ten, while naming numbers 11 to 15 as the ones with no effect.",
+        "quote": "There are only 10 registers, values 11 through 15 have no effect when written to.",
+        "source": "Charles MacDonald, Sega Master System VDP documentation, section 3"
+      },
+      "thisPackageDid": {
+        "claim": "Eleven registers; numbers 11 to 15 change nothing.",
+        "why": "Both sources name the same working numbers, 0 to 10. The count of ten miscounts them."
+      },
+      "packageFollows": "document",
+      "wouldCloseIt": "Nothing further."
+    },
+    {
+      "id": "blanking-access-rate",
+      "severity": "medium",
+      "status": "open",
+      "topic": "How fast the processor can reach the part outside the active display.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "No faster than every 16 T states during vertical blanking.",
+        "quote": "16 Z80A T-States during VBLANK",
+        "source": "Software Reference Manual for the SEGA Mark III Console, page 12"
+      },
+      "referenceSays": {
+        "rung": 3,
+        "claim": "Charles MacDonald's Line Interrupt Test #1, written by the author of the community document and run by him on hardware, writes video memory every 12 T states with the display off. The census board measures the spacing."
+      },
+      "thisPackageDid": {
+        "claim": "Loses no access outside the active display at any spacing the processor can produce.",
+        "why": "The manual's figure reads as guidance to programmers, and a test written against hardware exceeds it. No measurement of a lower limit exists."
+      },
+      "packageFollows": "reference",
+      "wouldCloseIt": "Write video memory every 11 T states with the display off on a console and read every byte back."
+    },
+    {
+      "id": "active-access-rate",
+      "severity": "medium",
+      "status": "open",
+      "topic": "How fast the processor can reach the part during the active display.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "No faster than every 29 T states during active video.",
+        "quote": "29 Z80A T-States during active video.",
+        "source": "Software Reference Manual for the SEGA Mark III Console, page 12"
+      },
+      "referenceSays": {
+        "rung": 3,
+        "claim": "The SEGA Master System TestSuite by sverx, built on devkitSMS and run on consoles, writes its text every 26 T states with the display on. The census board measures the spacing."
+      },
+      "thisPackageDid": {
+        "claim": "Lands an access 26 T states after the one before it in the active display, and loses one that arrives sooner.",
+        "why": "A cartridge tested on hardware reads correctly at 26. Nothing measures where between 26 and the next faster spacing a real part starts losing writes, so the line sits at the fastest spacing known to work."
+      },
+      "packageFollows": "reference",
+      "wouldCloseIt": "Write video memory at 25, 24 and fewer T states apart with the display on, on each console part, and read every byte back."
+    },
+    {
+      "id": "line-counter-line",
+      "severity": "medium",
+      "status": "narrowed",
+      "topic": "Which raster line the line interrupt is requested on.",
+      "documentSays": {
+        "rung": 1,
+        "claim": "Register 10 holds one less than the raster line to interrupt on, without saying whether lines count from zero or one.",
+        "quote": "The value loaded into R10 should be one less than the raster line you wish to \"trigger\" the interrupt.",
+        "source": "Software Reference Manual for the SEGA Mark III Console, page 18"
+      },
+      "referenceSays": {
+        "rung": 3,
+        "claim": "The counter is checked and decremented as each line of the active display begins, so it underflows as line R10 begins, counting from zero, and a register 10 of 192 requests the interrupt a whole line before the frame flag sets.",
+        "quote": "The counter is decremented on lines 0-191 and 192.",
+        "source": "Charles MacDonald, Sega Master System VDP documentation, section 12, with Genesis Plus GX core/system.c at a5834b3df455c49bb97bfaa328c20845831f576b"
+      },
+      "thisPackageDid": {
+        "claim": "Counts each line as it begins, so with 94 the request comes as the 95th line begins, counting from one.",
+        "why": "Read counting from zero, the line-192 request and the frame flag fell on the same dot, and Spider-Man - Return of the Sinister Six and Last Action Hero, on both consoles, never turned the display on: each loads 192, takes the line interrupt in a handler that acts only when the frame flag is still clear, and waits for that. Read counting from one, both start, and every test cartridge's record still holds."
+      },
+      "packageFollows": "corpus",
+      "wouldCloseIt": "Load register 10 with 0 on a console and read the V counter inside the line interrupt handler."
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+extend-exclude = ["zilog-z80-python", "ti-tms9918-python", "ti-sn76489-python"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF", "PL", "BLE", "C4", "N", "A", "T20", "PTH"]
+ignore = [
+  "PLR0913",
+  "PLR2004",
+  "PLR0912",
+  "PLR0915",
+  "PLR0911",
+  "PLC0415",
+  "PLR0917",
+  "E501",
+  "N818",
+]
+
+[tool.ruff.lint.isort]
+known-third-party = ["tms9918", "sn76489", "z80"]
+
+[tool.ruff.lint.per-file-ignores]
+"segavdp/environment.py" = ["BLE001", "T201"]
+"*.test.py" = ["PLR2004", "N999"]
+"conformance/*.py" = ["T201"]
+"conformance/census.py" = ["BLE001", "T201"]
+"segavdp/doctor.py" = ["BLE001", "T201"]
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+warn_unreachable = true
+warn_no_return = true
+strict_equality = true
+extra_checks = true
+enable_error_code = [
+  "explicit-override",
+  "ignore-without-code",
+  "possibly-undefined",
+  "redundant-expr",
+  "truthy-bool",
+  "truthy-iterable",
+  "unused-awaitable",
+]
+files = ["segavdp", "conformance"]
+mypy_path = ["ti-tms9918-python", "ti-sn76489-python"]
+
+[[tool.mypy.overrides]]
+module = ["z80.*"]
+follow_imports = "skip"
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["segavdp", "conformance"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+exclude_also = [
+  'if __name__ == "__main__":',
+  'if TYPE_CHECKING:',
+  '^\s*\.\.\.$',
+  ': \.\.\.$',
+  '@unittest\.skipUnless\(CLOCKED,',
+  '@unittest\.skipUnless\(SOLD_AS_A_COMPONENT,',
+  '^def machine_mentions\(',
+  '^def listing\(',
+]

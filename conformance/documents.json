@@ -1,0 +1,59 @@
+{
+  "note": "Every document this package is held to, by identity rather than by name. conformance/documents.py brings each one down again and refuses anything whose digest does not match.",
+  "authority": {
+    "1": "A manufacturer document. What the maker of the hardware printed about it.",
+    "2": "A recording taken off real hardware. Nothing here occupies that rung yet.",
+    "3": "Independent research, for what no manufacturer printed."
+  },
+  "whyNotCarriedHere": "None of these is this project's document, and this repository is public. What is carried is the identity, which is what makes a copy checkable.",
+  "readOn": "2026-10-27",
+  "partsWithNoDocument": {
+    "315-5124": "No Sega data sheet for the part is known to be public. The Mark III reference manual below describes what a programmer sees, not the chip's timing.",
+    "315-5246": "No Sega document describes the second Master System part. What it changed rests on the community document below.",
+    "315-5378": "No Sega document describes the Game Gear part. What it changed rests on the community document below."
+  },
+  "documents": [
+    {
+      "file": "manufacturer/SoftwareReferenceManualForSegaMarkIIIEU.pdf",
+      "rung": 1,
+      "publisher": "Sega, by its own page footer, Sega Mk3 Hardware Reference Manual (Rev1)",
+      "title": "Software Reference Manual for the SEGA Mark III Console",
+      "date": "undated",
+      "retrievedFrom": "https://segaretro.org/images/d/d6/SoftwareReferenceManualForSegaMarkIIIEU.pdf",
+      "covers": ["315-5124"],
+      "settles": "The port protocol and its four command codes, the eleven registers and what each bit selects, the colour RAM format and its four intensities, the screen map word, the sprite attribute table and its terminator, the interrupt enables and the status bits, the line counter's reload rule, and the bound on how fast the processor may reach the part.",
+      "sha256": "166f09331ba9df055f7a352f10c6a7843911470bc72d9347eda4a0de86e8cfce",
+      "bytes": 184840,
+      "pages": 45,
+      "provenance": "A retyped text, not a scan: the PDF was produced by Ghostscript and carries typing errors. Its footer names Sega, and nobody records who retyped it or from which printing. Every quote in hardware.json matches its text layer once both are flattened to letters and digits."
+    },
+    {
+      "file": "community/msvdp-20021112.txt",
+      "rung": 3,
+      "publisher": "Charles MacDonald",
+      "title": "Sega Master System VDP documentation",
+      "date": "12 November 2002",
+      "retrievedFrom": "https://www.smspower.org/uploads/Development/msvdp-20021112.txt",
+      "covers": ["315-5124", "315-5246", "315-5378"],
+      "settles": "Nothing on its own. It is the lead for what Sega never printed: the port decode on A7, A6 and A0, the read buffer quirk, the line and V counter tables, the 224 and 240 line screens, the first part's address masking and zoom limit, and the Game Gear colour RAM latch. Most of the emulation world is downstream of it, so it counts as one source however many implementations repeat it.",
+      "sha256": "dc16f8e687b8b137d9f7d457659135ebb7b21e6e7874250fac0719dd1eb6207c",
+      "bytes": 43417,
+      "pages": 1,
+      "provenance": "A plain text file its author marks as an unpublished work. Its own display timing section says where in a line the line interrupt, the frame interrupt and the V counter step is not known to it."
+    },
+    {
+      "file": "community/SN76489.html",
+      "rung": 3,
+      "publisher": "SMS Power, the page maintained by Maxim",
+      "title": "SN76489",
+      "date": "page last modified 4 September 2025",
+      "retrievedFrom": "https://www.smspower.org/Development/SN76489?action=print",
+      "covers": ["315-5124", "315-5246", "315-5378"],
+      "settles": "Nothing on its own. It is the lead for what the sound generator inside the Sega parts changed from TI's: a sixteen bit shift register tapped at bits 0 and 3, the reset value of a noise write, a period of zero or one holding the output high, the power-on registers, and the Game Gear stereo register.",
+      "sha256": "14d146c13d4d98a04b2c2c05498753bc60197696cea1b73860bfa23416cd15ce",
+      "bytes": 54534,
+      "pages": 1,
+      "provenance": "A wiki page in its print view. An edit to the page changes its digest, which the weekly check reports, and that is the point: a changed page is a reason to read it again."
+    }
+  ]
+}
