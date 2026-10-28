@@ -8,7 +8,7 @@
 [![Release](https://img.shields.io/github/v/release/gufranco/sega-vdp-python)](https://github.com/gufranco/sega-vdp-python/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-**2,608** 個不同的 Master System 和 Game Gear 映像各啟動 **600** 幀，其中 **794** 個使用世嘉分頁的零售映像的屬性失敗為 **0**，在手冊中找到 **64** 處引文，**3** 款晶片，**860** 個測試，**100%** 語句和分支覆蓋率，除標準庫和家族中兩個成員外沒有依賴套件
+**2,608** 個不同的 Master System 和 Game Gear 映像各啟動 **600** 幀，其中 **794** 個使用世嘉分頁的零售映像的屬性失敗為 **0**，在手冊中找到 **64** 處引文，**3** 款晶片，**862** 個測試，**100%** 語句和分支覆蓋率，除標準庫和家族中兩個成員外沒有依賴套件
 
 ```python
 import segavdp

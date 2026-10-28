@@ -8,7 +8,7 @@ English | [日本語](README.ja.md) | [简体中文](README.zh-Hans.md) | [繁�
 [![Release](https://img.shields.io/github/v/release/gufranco/sega-vdp-python)](https://github.com/gufranco/sega-vdp-python/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-**2,608** distinct Master System and Game Gear images booted for **600** frames each, **0** property failures over the **794** retail ones on Sega's paging, **64** quotes located in the manual, **3** parts, **860** tests, **100%** statement and branch coverage, no dependencies beyond the standard library and two family members
+**2,608** distinct Master System and Game Gear images booted for **600** frames each, **0** property failures over the **794** retail ones on Sega's paging, **64** quotes located in the manual, **3** parts, **862** tests, **100%** statement and branch coverage, no dependencies beyond the standard library and two family members
 
 ```python
 import segavdp
