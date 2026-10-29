@@ -4,9 +4,11 @@
 
 [English](README.md) | [日本語](README.ja.md) | 简体中文 | [繁體中文（香港）](README.zh-HK.md)
 
-[![CI](https://github.com/gufranco/sega-vdp-python/actions/workflows/ci.yml/badge.svg)](https://github.com/gufranco/sega-vdp-python/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/gufranco/sega-vdp-python)](https://github.com/gufranco/sega-vdp-python/releases)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![ci](https://img.shields.io/github/actions/workflow/status/gufranco/sega-vdp-python/ci.yml?branch=main&style=flat-square&label=ci)](https://github.com/gufranco/sega-vdp-python/actions/workflows/ci.yml)
+[![release](https://img.shields.io/github/v/release/gufranco/sega-vdp-python?style=flat-square&label=release)](https://github.com/gufranco/sega-vdp-python/releases/latest)
+[![coverage](https://img.shields.io/badge/coverage-100%25-brightgreen?style=flat-square)](https://github.com/gufranco/sega-vdp-python/actions/workflows/ci.yml)
+[![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sega-vdp-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sega-vdp-python)
+[![license](https://img.shields.io/github/license/gufranco/sega-vdp-python?style=flat-square&label=license)](LICENSE)
 
 **2,608** 个不同的 Master System 和 Game Gear 映像各启动 **600** 帧，**0** 个属性失败（涵盖其中 **794** 个使用世嘉分页的零售映像），在手册中定位到 **64** 处引文，**3** 款芯片，**862** 个测试，**100%** 语句和分支覆盖率，除标准库和家族中的两个成员外无依赖
 

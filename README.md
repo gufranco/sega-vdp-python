@@ -4,9 +4,11 @@ The Sega 315-5124, 315-5246 and 315-5378 video display processors in Python, wit
 
 English | [日本語](README.ja.md) | [简体中文](README.zh-Hans.md) | [繁體中文（香港）](README.zh-HK.md)
 
-[![CI](https://github.com/gufranco/sega-vdp-python/actions/workflows/ci.yml/badge.svg)](https://github.com/gufranco/sega-vdp-python/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/gufranco/sega-vdp-python)](https://github.com/gufranco/sega-vdp-python/releases)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![ci](https://img.shields.io/github/actions/workflow/status/gufranco/sega-vdp-python/ci.yml?branch=main&style=flat-square&label=ci)](https://github.com/gufranco/sega-vdp-python/actions/workflows/ci.yml)
+[![release](https://img.shields.io/github/v/release/gufranco/sega-vdp-python?style=flat-square&label=release)](https://github.com/gufranco/sega-vdp-python/releases/latest)
+[![coverage](https://img.shields.io/badge/coverage-100%25-brightgreen?style=flat-square)](https://github.com/gufranco/sega-vdp-python/actions/workflows/ci.yml)
+[![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sega-vdp-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sega-vdp-python)
+[![license](https://img.shields.io/github/license/gufranco/sega-vdp-python?style=flat-square&label=license)](LICENSE)
 
 **2,608** distinct Master System and Game Gear images booted for **600** frames each, **0** property failures over the **794** retail ones on Sega's paging, **64** quotes located in the manual, **3** parts, **862** tests, **100%** statement and branch coverage, no dependencies beyond the standard library and two family members
 
