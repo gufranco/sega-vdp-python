@@ -10,7 +10,7 @@ English | [日本語](README.ja.md) | [简体中文](README.zh-Hans.md) | [繁�
 [![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sega-vdp-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sega-vdp-python)
 [![license](https://img.shields.io/github/license/gufranco/sega-vdp-python?style=flat-square&label=license)](LICENSE)
 
-**2,608** distinct Master System and Game Gear images booted for **600** frames each, **0** property failures over the **794** retail ones on Sega's paging, **64** quotes located in the manual, **3** parts, **862** tests, **100%** statement and branch coverage, no dependencies beyond the standard library and two family members
+**2,608** distinct Master System and Game Gear images booted for **600** frames each, **0** property failures over the **794** retail ones on Sega's paging, **64** quotes located in the manual, **3** parts, **863** tests, **100%** statement and branch coverage, no dependencies beyond the standard library and two family members
 
 ```python
 import segavdp
