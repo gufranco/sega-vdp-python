@@ -10,7 +10,7 @@ Sega の 315-5124、315-5246、315-5378 ビデオディスプレイプロセッ�
 [![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sega-vdp-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sega-vdp-python)
 [![license](https://img.shields.io/github/license/gufranco/sega-vdp-python?style=flat-square&label=license)](LICENSE)
 
-異なるマスターシステムとゲームギアのイメージ **2,608** 本をそれぞれ **600** フレーム起動、Sega のページングを使う市販の **794** 本で性質の不合格 **0** 件、マニュアル内で所在を確認した引用 **64** 件、**3** 品種、テスト **862** 件、ステートメントとブランチのカバレッジ **100%**、標準ライブラリとファミリーの 2 つのメンバー以外への依存関係なし
+異なるマスターシステムとゲームギアのイメージ **2,608** 本をそれぞれ **600** フレーム起動、Sega のページングを使う市販の **794** 本で性質の不合格 **0** 件、マニュアル内で所在を確認した引用 **64** 件、**3** 品種、テスト **863** 件、ステートメントとブランチのカバレッジ **100%**、標準ライブラリとファミリーの 2 つのメンバー以外への依存関係なし
 
 ```python
 import segavdp

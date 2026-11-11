@@ -10,7 +10,7 @@
 [![openssf scorecard](https://img.shields.io/ossf-scorecard/github.com/gufranco/sega-vdp-python?style=flat-square&label=openssf%20scorecard)](https://scorecard.dev/viewer/?uri=github.com/gufranco/sega-vdp-python)
 [![license](https://img.shields.io/github/license/gufranco/sega-vdp-python?style=flat-square&label=license)](LICENSE)
 
-**2,608** 个不同的 Master System 和 Game Gear 映像各启动 **600** 帧，**0** 个属性失败（涵盖其中 **794** 个使用世嘉分页的零售映像），在手册中定位到 **64** 处引文，**3** 款芯片，**862** 个测试，**100%** 语句和分支覆盖率，除标准库和家族中的两个成员外无依赖
+**2,608** 个不同的 Master System 和 Game Gear 映像各启动 **600** 帧，**0** 个属性失败（涵盖其中 **794** 个使用世嘉分页的零售映像），在手册中定位到 **64** 处引文，**3** 款芯片，**863** 个测试，**100%** 语句和分支覆盖率，除标准库和家族中的两个成员外无依赖
 
 ```python
 import segavdp
